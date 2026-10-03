@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node
+node_modules/
+web/dist/
+
+# Generated data: reproducible from scripts, not worth versioning.
+data/sklearn/
+api/services/data/
+results/_panels/
+*.egg-info/
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
