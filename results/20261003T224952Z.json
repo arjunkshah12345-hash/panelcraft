@@ -1,0 +1,1085 @@
+{
+  "provider": "synthetic",
+  "character": "Mara Vess",
+  "script_title": "The Signal Keeper",
+  "created_at": 1791067825.7035542,
+  "strengths": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "panels_per_condition": 6,
+  "reference_images": 3,
+  "conditions": [
+    {
+      "condition": "identity_strength=0",
+      "identity_strength": 0.0,
+      "identity_mean": 0.2633400857448578,
+      "identity_min": 0.03303499147295952,
+      "pairwise_mean": 0.4038824439048767,
+      "variety": 0.561923215786616,
+      "true_identity_distance": 1.8344420790672302,
+      "panels": [
+        {
+          "panel_id": "panel-1",
+          "sim_to_reference": 0.3315,
+          "nearest_reference": "ref2",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0/panel0.png"
+        },
+        {
+          "panel_id": "panel-2",
+          "sim_to_reference": 0.302,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0/panel1.png"
+        },
+        {
+          "panel_id": "panel-3",
+          "sim_to_reference": 0.3339,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0/panel2.png"
+        },
+        {
+          "panel_id": "panel-4",
+          "sim_to_reference": 0.445,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0/panel3.png"
+        },
+        {
+          "panel_id": "panel-5",
+          "sim_to_reference": 0.1346,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0/panel4.png"
+        },
+        {
+          "panel_id": "panel-6",
+          "sim_to_reference": 0.033,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0/panel5.png"
+        }
+      ],
+      "report": {
+        "condition": "identity_strength=0",
+        "identity_mean": 0.2633,
+        "identity_min": 0.033,
+        "identity_std": 0.1377,
+        "pairwise_mean": 0.4039,
+        "pairwise_min": 0.1272,
+        "matrix": [
+          [
+            1.0,
+            0.759,
+            0.3748,
+            0.1272,
+            0.3125,
+            0.5074
+          ],
+          [
+            0.759,
+            1.0,
+            0.2258,
+            0.1695,
+            0.1979,
+            0.3196
+          ],
+          [
+            0.3748,
+            0.2258,
+            1.0,
+            0.2287,
+            0.6147,
+            0.5016
+          ],
+          [
+            0.1272,
+            0.1695,
+            0.2287,
+            1.0,
+            0.668,
+            0.3329
+          ],
+          [
+            0.3125,
+            0.1979,
+            0.6147,
+            0.668,
+            1.0,
+            0.7188
+          ],
+          [
+            0.5074,
+            0.3196,
+            0.5016,
+            0.3329,
+            0.7188,
+            1.0
+          ]
+        ],
+        "panel_ids": [
+          "panel-1",
+          "panel-2",
+          "panel-3",
+          "panel-4",
+          "panel-5",
+          "panel-6"
+        ],
+        "panels": [
+          {
+            "panel_id": "panel-1",
+            "sim_to_reference": 0.3315,
+            "nearest_reference": "ref2",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-2",
+            "sim_to_reference": 0.302,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-3",
+            "sim_to_reference": 0.3339,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-4",
+            "sim_to_reference": 0.445,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-5",
+            "sim_to_reference": 0.1346,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-6",
+            "sim_to_reference": 0.033,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          }
+        ],
+        "reference_count": 3,
+        "detection_rate": 1.0,
+        "threshold": 0.55,
+        "consistent": false,
+        "notes": []
+      }
+    },
+    {
+      "condition": "identity_strength=0.25",
+      "identity_strength": 0.25,
+      "identity_mean": 0.2022373229265213,
+      "identity_min": 0.08773015439510345,
+      "pairwise_mean": 0.6572256684303284,
+      "variety": 0.517546558380127,
+      "true_identity_distance": 1.3758315443992615,
+      "panels": [
+        {
+          "panel_id": "panel-1",
+          "sim_to_reference": 0.2582,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.25/panel0.png"
+        },
+        {
+          "panel_id": "panel-2",
+          "sim_to_reference": 0.3432,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.25/panel1.png"
+        },
+        {
+          "panel_id": "panel-3",
+          "sim_to_reference": 0.0877,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.25/panel2.png"
+        },
+        {
+          "panel_id": "panel-4",
+          "sim_to_reference": 0.1794,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.25/panel3.png"
+        },
+        {
+          "panel_id": "panel-5",
+          "sim_to_reference": 0.2449,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.25/panel4.png"
+        },
+        {
+          "panel_id": "panel-6",
+          "sim_to_reference": 0.0999,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.25/panel5.png"
+        }
+      ],
+      "report": {
+        "condition": "identity_strength=0.25",
+        "identity_mean": 0.2022,
+        "identity_min": 0.0877,
+        "identity_std": 0.0903,
+        "pairwise_mean": 0.6572,
+        "pairwise_min": 0.3812,
+        "matrix": [
+          [
+            1.0,
+            0.9217,
+            0.6946,
+            0.5403,
+            0.6621,
+            0.6763
+          ],
+          [
+            0.9217,
+            1.0,
+            0.6432,
+            0.3812,
+            0.4845,
+            0.5688
+          ],
+          [
+            0.6946,
+            0.6432,
+            1.0,
+            0.5311,
+            0.7403,
+            0.6046
+          ],
+          [
+            0.5403,
+            0.3812,
+            0.5311,
+            1.0,
+            0.8424,
+            0.7374
+          ],
+          [
+            0.6621,
+            0.4845,
+            0.7403,
+            0.8424,
+            1.0,
+            0.8297
+          ],
+          [
+            0.6763,
+            0.5688,
+            0.6046,
+            0.7374,
+            0.8297,
+            1.0
+          ]
+        ],
+        "panel_ids": [
+          "panel-1",
+          "panel-2",
+          "panel-3",
+          "panel-4",
+          "panel-5",
+          "panel-6"
+        ],
+        "panels": [
+          {
+            "panel_id": "panel-1",
+            "sim_to_reference": 0.2582,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-2",
+            "sim_to_reference": 0.3432,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-3",
+            "sim_to_reference": 0.0877,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-4",
+            "sim_to_reference": 0.1794,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-5",
+            "sim_to_reference": 0.2449,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-6",
+            "sim_to_reference": 0.0999,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          }
+        ],
+        "reference_count": 3,
+        "detection_rate": 1.0,
+        "threshold": 0.55,
+        "consistent": false,
+        "notes": []
+      }
+    },
+    {
+      "condition": "identity_strength=0.5",
+      "identity_strength": 0.5,
+      "identity_mean": 0.18856199085712433,
+      "identity_min": 0.08116602152585983,
+      "pairwise_mean": 0.5277431011199951,
+      "variety": 0.44428439339001974,
+      "true_identity_distance": 0.9172210892041525,
+      "panels": [
+        {
+          "panel_id": "panel-1",
+          "sim_to_reference": 0.1495,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.5/panel0.png"
+        },
+        {
+          "panel_id": "panel-2",
+          "sim_to_reference": 0.2309,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.5/panel1.png"
+        },
+        {
+          "panel_id": "panel-3",
+          "sim_to_reference": 0.0812,
+          "nearest_reference": "ref1",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.5/panel2.png"
+        },
+        {
+          "panel_id": "panel-4",
+          "sim_to_reference": 0.1417,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.5/panel3.png"
+        },
+        {
+          "panel_id": "panel-5",
+          "sim_to_reference": 0.26,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.5/panel4.png"
+        },
+        {
+          "panel_id": "panel-6",
+          "sim_to_reference": 0.2681,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.5/panel5.png"
+        }
+      ],
+      "report": {
+        "condition": "identity_strength=0.5",
+        "identity_mean": 0.1886,
+        "identity_min": 0.0812,
+        "identity_std": 0.0689,
+        "pairwise_mean": 0.5277,
+        "pairwise_min": 0.1076,
+        "matrix": [
+          [
+            1.0,
+            0.5298,
+            0.4495,
+            0.4947,
+            0.7194,
+            0.628
+          ],
+          [
+            0.5298,
+            1.0,
+            0.2228,
+            0.9251,
+            0.3912,
+            0.9143
+          ],
+          [
+            0.4495,
+            0.2228,
+            1.0,
+            0.1076,
+            0.7548,
+            0.226
+          ],
+          [
+            0.4947,
+            0.9251,
+            0.1076,
+            1.0,
+            0.2369,
+            0.914
+          ],
+          [
+            0.7194,
+            0.3912,
+            0.7548,
+            0.2369,
+            1.0,
+            0.4022
+          ],
+          [
+            0.628,
+            0.9143,
+            0.226,
+            0.914,
+            0.4022,
+            1.0
+          ]
+        ],
+        "panel_ids": [
+          "panel-1",
+          "panel-2",
+          "panel-3",
+          "panel-4",
+          "panel-5",
+          "panel-6"
+        ],
+        "panels": [
+          {
+            "panel_id": "panel-1",
+            "sim_to_reference": 0.1495,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-2",
+            "sim_to_reference": 0.2309,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-3",
+            "sim_to_reference": 0.0812,
+            "nearest_reference": "ref1",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-4",
+            "sim_to_reference": 0.1417,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-5",
+            "sim_to_reference": 0.26,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-6",
+            "sim_to_reference": 0.2681,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          }
+        ],
+        "reference_count": 3,
+        "detection_rate": 1.0,
+        "threshold": 0.55,
+        "consistent": false,
+        "notes": []
+      }
+    },
+    {
+      "condition": "identity_strength=0.75",
+      "identity_strength": 0.75,
+      "identity_mean": 0.3357833921909332,
+      "identity_min": 0.2756197154521942,
+      "pairwise_mean": 0.7681546807289124,
+      "variety": 0.39006132980187735,
+      "true_identity_distance": 0.45861053963502246,
+      "panels": [
+        {
+          "panel_id": "panel-1",
+          "sim_to_reference": 0.3122,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.75/panel0.png"
+        },
+        {
+          "panel_id": "panel-2",
+          "sim_to_reference": 0.3474,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.75/panel1.png"
+        },
+        {
+          "panel_id": "panel-3",
+          "sim_to_reference": 0.2756,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.75/panel2.png"
+        },
+        {
+          "panel_id": "panel-4",
+          "sim_to_reference": 0.3355,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.75/panel3.png"
+        },
+        {
+          "panel_id": "panel-5",
+          "sim_to_reference": 0.3424,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.75/panel4.png"
+        },
+        {
+          "panel_id": "panel-6",
+          "sim_to_reference": 0.4016,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=0.75/panel5.png"
+        }
+      ],
+      "report": {
+        "condition": "identity_strength=0.75",
+        "identity_mean": 0.3358,
+        "identity_min": 0.2756,
+        "identity_std": 0.038,
+        "pairwise_mean": 0.7682,
+        "pairwise_min": 0.4151,
+        "matrix": [
+          [
+            1.0,
+            0.9349,
+            0.5028,
+            0.8901,
+            0.8705,
+            0.8448
+          ],
+          [
+            0.9349,
+            1.0,
+            0.4632,
+            0.9415,
+            0.9176,
+            0.9005
+          ],
+          [
+            0.5028,
+            0.4632,
+            1.0,
+            0.4151,
+            0.4713,
+            0.5098
+          ],
+          [
+            0.8901,
+            0.9415,
+            0.4151,
+            1.0,
+            0.9524,
+            0.9393
+          ],
+          [
+            0.8705,
+            0.9176,
+            0.4713,
+            0.9524,
+            1.0,
+            0.9685
+          ],
+          [
+            0.8448,
+            0.9005,
+            0.5098,
+            0.9393,
+            0.9685,
+            1.0
+          ]
+        ],
+        "panel_ids": [
+          "panel-1",
+          "panel-2",
+          "panel-3",
+          "panel-4",
+          "panel-5",
+          "panel-6"
+        ],
+        "panels": [
+          {
+            "panel_id": "panel-1",
+            "sim_to_reference": 0.3122,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-2",
+            "sim_to_reference": 0.3474,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-3",
+            "sim_to_reference": 0.2756,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-4",
+            "sim_to_reference": 0.3355,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-5",
+            "sim_to_reference": 0.3424,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-6",
+            "sim_to_reference": 0.4016,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          }
+        ],
+        "reference_count": 3,
+        "detection_rate": 1.0,
+        "threshold": 0.55,
+        "consistent": false,
+        "notes": []
+      }
+    },
+    {
+      "condition": "identity_strength=1",
+      "identity_strength": 1.0,
+      "identity_mean": 0.4472155272960663,
+      "identity_min": 0.4081942141056061,
+      "pairwise_mean": 0.9644696712493896,
+      "variety": 0.26532651434342064,
+      "true_identity_distance": 0.0,
+      "panels": [
+        {
+          "panel_id": "panel-1",
+          "sim_to_reference": 0.5157,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=1/panel0.png"
+        },
+        {
+          "panel_id": "panel-2",
+          "sim_to_reference": 0.4667,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=1/panel1.png"
+        },
+        {
+          "panel_id": "panel-3",
+          "sim_to_reference": 0.4127,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=1/panel2.png"
+        },
+        {
+          "panel_id": "panel-4",
+          "sim_to_reference": 0.4082,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=1/panel3.png"
+        },
+        {
+          "panel_id": "panel-5",
+          "sim_to_reference": 0.4303,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=1/panel4.png"
+        },
+        {
+          "panel_id": "panel-6",
+          "sim_to_reference": 0.4497,
+          "nearest_reference": "ref0",
+          "detected_face": true,
+          "verdict": "drift",
+          "note": null,
+          "threshold": 0.55,
+          "image_path": "results/20261003T224952Z/identity_strength=1/panel5.png"
+        }
+      ],
+      "report": {
+        "condition": "identity_strength=1",
+        "identity_mean": 0.4472,
+        "identity_min": 0.4082,
+        "identity_std": 0.0367,
+        "pairwise_mean": 0.9645,
+        "pairwise_min": 0.8856,
+        "matrix": [
+          [
+            1.0,
+            0.9461,
+            0.9037,
+            0.8856,
+            0.9331,
+            0.9085
+          ],
+          [
+            0.9461,
+            1.0,
+            0.987,
+            0.9774,
+            0.9967,
+            0.9886
+          ],
+          [
+            0.9037,
+            0.987,
+            1.0,
+            0.9963,
+            0.9891,
+            0.9966
+          ],
+          [
+            0.8856,
+            0.9774,
+            0.9963,
+            1.0,
+            0.9765,
+            0.9966
+          ],
+          [
+            0.9331,
+            0.9967,
+            0.9891,
+            0.9765,
+            1.0,
+            0.9851
+          ],
+          [
+            0.9085,
+            0.9886,
+            0.9966,
+            0.9966,
+            0.9851,
+            1.0
+          ]
+        ],
+        "panel_ids": [
+          "panel-1",
+          "panel-2",
+          "panel-3",
+          "panel-4",
+          "panel-5",
+          "panel-6"
+        ],
+        "panels": [
+          {
+            "panel_id": "panel-1",
+            "sim_to_reference": 0.5157,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-2",
+            "sim_to_reference": 0.4667,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-3",
+            "sim_to_reference": 0.4127,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-4",
+            "sim_to_reference": 0.4082,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-5",
+            "sim_to_reference": 0.4303,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          },
+          {
+            "panel_id": "panel-6",
+            "sim_to_reference": 0.4497,
+            "nearest_reference": "ref0",
+            "detected_face": true,
+            "verdict": "drift",
+            "note": null,
+            "threshold": 0.55
+          }
+        ],
+        "reference_count": 3,
+        "detection_rate": 1.0,
+        "threshold": 0.55,
+        "consistent": false,
+        "notes": []
+      }
+    }
+  ],
+  "tradeoff": [
+    {
+      "identity_strength": 0.0,
+      "identity_mean": 0.2633400857448578,
+      "identity_min": 0.03303499147295952,
+      "variety": 0.561923215786616,
+      "true_identity_distance": 1.8344420790672302,
+      "dominated": false
+    },
+    {
+      "identity_strength": 0.25,
+      "identity_mean": 0.2022373229265213,
+      "identity_min": 0.08773015439510345,
+      "variety": 0.517546558380127,
+      "true_identity_distance": 1.3758315443992615,
+      "dominated": true
+    },
+    {
+      "identity_strength": 0.5,
+      "identity_mean": 0.18856199085712433,
+      "identity_min": 0.08116602152585983,
+      "variety": 0.44428439339001974,
+      "true_identity_distance": 0.9172210892041525,
+      "dominated": true
+    },
+    {
+      "identity_strength": 0.75,
+      "identity_mean": 0.3357833921909332,
+      "identity_min": 0.2756197154521942,
+      "variety": 0.39006132980187735,
+      "true_identity_distance": 0.45861053963502246,
+      "dominated": false
+    },
+    {
+      "identity_strength": 1.0,
+      "identity_mean": 0.4472155272960663,
+      "identity_min": 0.4081942141056061,
+      "variety": 0.26532651434342064,
+      "true_identity_distance": 0.0,
+      "dominated": false
+    }
+  ],
+  "calibration": {
+    "threshold": 0.4082,
+    "balanced_accuracy": 0.9167,
+    "tpr": 1.0,
+    "fpr": 0.1667,
+    "auroc": 0.9167,
+    "n_positive": 6,
+    "n_negative": 6,
+    "held_out": false,
+    "caveat": "Threshold tuned on the strongest and weakest panels of this same sweep. It is a fit to these panels, not an independent verification result. See scripts/validate_scorer.py for the held-out scorer check."
+  },
+  "recommended_strength": null,
+  "pareto": [
+    0.0,
+    0.75,
+    1.0
+  ],
+  "elapsed_s": 33.64526295661926,
+  "identity_axis_trustworthy": false,
+  "identity_axis_note": "Face embedding models are trained on photographs. On this provider's synthetic vector faces the identity axis tracks pose and rendering style rather than identity, so treat identity values here as pipeline smoke-test output, not as a measurement. The variety axis is sound, and identity is measured properly on real output (see scripts/validate_scorer.py and the hosted providers).",
+  "harness_validation": {
+    "n": 30,
+    "spearman_true_drift_vs_measured_similarity": -0.5764,
+    "p_value": 0.000856,
+    "reading": "Measurement tracks known identity drift."
+  },
+  "notes": [
+    "Seeds are identical across the sweep, so identity strength is the only variable.",
+    "Variety excludes each panel's own face crop, so repeated faces cannot inflate it.",
+    "References: 3 portrait(s), seed ref.",
+    "Measurement domain: synthetic.",
+    "Identity axis flagged untrustworthy for this provider (see identity_axis_note). No recommended strength is emitted, because it would be derived from that axis.",
+    "Harness check against ground truth: Spearman -0.5764 (p=0.000856, n=30).",
+    "Provider exposes ground-truth drift, so the tradeoff curve can also be read without trusting the measurement: true identity distance s=0->1.834, s=0.25->1.376, s=0.5->0.917, s=0.75->0.459, s=1->0.000."
+  ],
+  "created_at_iso": "2026-10-03T22:50:25Z"
+}

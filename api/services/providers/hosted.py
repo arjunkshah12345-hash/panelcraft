@@ -38,6 +38,19 @@ class _HostedProvider:
 
     name = "hosted"
     default_model = ""
+    # Declared per subclass. These are *model inputs*, so there is nothing to discover by
+    # probing a response — an earlier version scanned the request payload it had just built,
+    # never found the key, and silently dropped every strength value while still advertising
+    # the dial as native, making the benchmark's x-axis a no-op. Declaring the parameter and
+    # its native range keeps the mapping auditable instead of implied.
+    identity_param: str | None = None
+    identity_range: tuple[float, float] = (0.0, 1.0)
+
+    def map_strength(self, identity_strength: float) -> float:
+        """Map the normalised 0-1 dial onto this model's native identity-weight range."""
+        low, high = self.identity_range
+        strength = float(np.clip(identity_strength, 0.0, 1.0))
+        return low + strength * (high - low)
 
     def __init__(self, api_key: str | None = None, model: str | None = None, timeout: float = 180.0):
         self.api_key = api_key or os.getenv(self.env_key, "")
@@ -78,15 +91,10 @@ class PulidReplicateProvider(_HostedProvider):
     env_key = "REPLICATE_API_TOKEN"
     default_model = "bytedance/pulid"
 
-    # Candidate identity-weight parameter names, in priority order. PuLID forks on
-    # Replicate have shipped under several names across versions.
-    ID_PARAMS = ("id_weight", "identity_weight", "identity_scale", "ip_weight")
-
-    def _find_identity_param(self, payload: dict) -> tuple[str | None, str]:
-        for key in self.ID_PARAMS:
-            if key in payload:
-                return key, "native"
-        return None, "fixed"
+    identity_param = "id_weight"
+    # PuLID loses the face below ~0.3 and starts to distort past ~1.3, so the dial spans
+    # that usable window rather than a naive 0-1.
+    identity_range = (0.4, 1.2)
 
     def generate(
         self,
@@ -103,16 +111,15 @@ class PulidReplicateProvider(_HostedProvider):
 
         data_uri = _image_to_data_uri(reference[0])
         strength = float(np.clip(identity_strength, 0.0, 1.0))
+        native_weight = self.map_strength(identity_strength)
         payload = {
             "input_image": data_uri,
             "prompt": prompt,
             "seed": seed or (panel_index * 7919 + 13),
             "num_inference_steps": 30,
             "guidance_scale": 6.0,
+            self.identity_param: native_weight,
         }
-        id_param, control = self._find_identity_param(payload)
-        if id_param:
-            payload[id_param] = 0.4 + strength * 0.8
 
         with httpx.Client(timeout=self.timeout) as client:
             created = client.post(
@@ -150,8 +157,9 @@ class PulidReplicateProvider(_HostedProvider):
                 "provider": self.name,
                 "model": self.model,
                 "identity_strength": strength,
-                "identity_control": control,
-                "identity_param": id_param,
+                "identity_control": "native",
+                "identity_param": self.identity_param,
+                "identity_weight_applied": native_weight,
                 "prediction_id": prediction.get("id"),
             },
         )
@@ -161,10 +169,14 @@ class PulidReplicateProvider(_HostedProvider):
             name=self.name,
             supports_identity_strength=True,
             supports_seed=True,
-            identity_param="id_weight",
+            identity_param=self.identity_param,
             identity_control="native",
             local=False,
-            notes="PuLID via Replicate. Native id_weight when the model exposes it.",
+            base_model="FLUX.1-dev",
+            notes=(
+                f"PuLID via Replicate. id_weight maps the 0-1 dial onto "
+                f"{self.identity_range[0]}-{self.identity_range[1]}."
+            ),
         )
 
 
@@ -174,7 +186,8 @@ class InstantIdReplicateProvider(_HostedProvider):
     name = "instantid-replicate"
     env_key = "REPLICATE_API_TOKEN"
     default_model = "InstantX/instant-id"
-    ID_PARAMS = ("ip_adapter_scale", "identity_scale", "instantid_weight")
+    identity_param = "ip_adapter_scale"
+    identity_range = (0.0, 1.0)
 
     def generate(
         self,
@@ -191,13 +204,14 @@ class InstantIdReplicateProvider(_HostedProvider):
 
         data_uri = _image_to_data_uri(reference[0])
         strength = float(np.clip(identity_strength, 0.0, 1.0))
+        native_weight = self.map_strength(identity_strength)
         payload = {
             "input_image": data_uri,
             "prompt": prompt,
             "seed": seed or (panel_index * 6151 + 29),
             "num_inference_steps": 30,
             "guidance_scale": 5.0,
-            "ip_adapter_scale": 0.0 + strength * 1.0,
+            self.identity_param: native_weight,
         }
 
         with httpx.Client(timeout=self.timeout) as client:
@@ -234,7 +248,8 @@ class InstantIdReplicateProvider(_HostedProvider):
                 "model": self.model,
                 "identity_strength": strength,
                 "identity_control": "native",
-                "identity_param": "ip_adapter_scale",
+                "identity_param": self.identity_param,
+                "identity_weight_applied": native_weight,
                 "prediction_id": prediction.get("id"),
             },
         )
@@ -244,24 +259,36 @@ class InstantIdReplicateProvider(_HostedProvider):
             name=self.name,
             supports_identity_strength=True,
             supports_seed=True,
-            identity_param="ip_adapter_scale",
+            identity_param=self.identity_param,
             identity_control="native",
             local=False,
-            notes="InstantID via Replicate. ip_adapter_scale maps to the identity dial.",
+            base_model="SDXL",
+            notes=(
+                f"InstantID via Replicate. {self.identity_param} maps the 0-1 dial onto "
+                f"{self.identity_range[0]}-{self.identity_range[1]}."
+            ),
         )
 
 
 class PromptOnlyBaselineProvider(_HostedProvider):
-    """The control condition.
+    """The control condition: same prompt, no reference image, no identity conditioning.
 
-    Same base diffusion model, same prompt, **no** reference image. This is the honest
-    baseline: the only variable is whether identity conditioning happens at all. Scoring
-    this is what makes the improvement number mean something.
+    Honest caveat, because it matters for how the result may be read: the default model is
+    ``flux-schnell``, while PuLID runs on a FLUX.1-dev-class backbone and InstantID on
+    SDXL. This is therefore **not** a controlled ablation — it differs from the treatment
+    in two variables at once (identity conditioning *and* backbone), so a gap against it
+    cannot be attributed to identity alone. It answers "how far does prompt-only drift on
+    a comparable model?" not "how much did the ID encoder buy?"
+
+    To make it a genuine control, point this at the same backbone as the treatment via
+    ``model=``; ``base_model`` is recorded on the capabilities so the pairing is visible
+    in the UI instead of assumed by whoever reads the chart.
     """
 
     name = "baseline-no-id"
     env_key = "REPLICATE_API_TOKEN"
     default_model = "black-forest-labs/flux-schnell"
+    base_model = "FLUX.1-schnell"
 
     def generate(
         self,
@@ -326,7 +353,12 @@ class PromptOnlyBaselineProvider(_HostedProvider):
             identity_param=None,
             identity_control="none",
             local=False,
-            notes="Control condition: identical model, no reference image.",
+            base_model=self.base_model,
+            notes=(
+                "Prompt-only reference point. NOT a controlled ablation against the "
+                f"treatment unless the backbone is matched ({self.base_model} vs the "
+                "treatment's own backbone)."
+            ),
         )
 
 

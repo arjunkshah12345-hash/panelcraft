@@ -18,6 +18,7 @@ never assumes a provider can report a pose.
 
 from __future__ import annotations
 
+import io
 import time
 from pathlib import Path
 from dataclasses import asdict, dataclass, field
@@ -59,6 +60,10 @@ def as_pil(image: object) -> Image.Image:
             array = np.stack([array] * 3, axis=-1)
         return Image.fromarray(array[:, :, :3])
     if isinstance(image, (str, Path)):
+        return Image.open(image).convert("RGB")
+    # Binary streams arrive from the API's base64 data-URL decoding. Decoded here rather
+    # than at the call site so this stays the single place that knows how to open an image.
+    if isinstance(image, io.IOBase):
         return Image.open(image).convert("RGB")
     raise TypeError(f"cannot interpret {type(image)!r} as an image")
 
@@ -350,7 +355,12 @@ def run_sweep(
         raise ValueError("provider produced no reference portraits")
 
     reference_arg: Sequence[str] | Sequence[Image.Image]
-    if ref_seed is not None and not isinstance(ref_images[0], Image.Image):
+    # A provider exposing ``reference_sheet`` is seed-addressable: it can rebuild the same
+    # portraits from a seed, so pass the seed rather than the rendered images. The previous
+    # check (``not isinstance(ref_images[0], Image.Image)``) could never be true here,
+    # because ``build_references`` always returns PIL images, so every sweep silently fell
+    # through to the image branch.
+    if ref_seed is not None and callable(getattr(provider, "reference_sheet", None)):
         reference_arg = [ref_seed]
     else:
         reference_arg = list(ref_images)

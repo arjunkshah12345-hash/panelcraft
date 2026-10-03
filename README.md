@@ -63,22 +63,17 @@ The script exits non-zero below AUROC 0.95, so it works as a test.
 ### The synthetic renderer's identity axis is **not** trustworthy — and the harness says so
 
 The synthetic renderer exists so the project runs with no API key and produces
-byte-identical output every time. It draws flat vector faces. A face embedding model
-trained on photographs cannot read identity off flat vector art — it mostly picks up pose
+byte-identical, reproducible output every time. The generator now hashes reference images
+by pixel content (not their Python object address), so sweep seeds are stable across
+processes and repeated runs. It draws flat vector faces: a face embedding model trained
+on photographs cannot reliably read identity off flat vector art — it mostly picks up pose
 and rendering style.
 
 PanelCraft detects this at runtime instead of publishing the number anyway:
 
-```
-identity trustworthy: False
-recommended strength: None
-harness vs ground truth: spearman 0.1653 (p=0.383, n=30)
-```
-
 Because the renderer knows exactly how far it moved each identity, the harness checks the
 measurement against that ground truth. The correlation sits at zero and is nowhere near
-significant — and because it is measuring noise, it is not stable run to run (observed
-between roughly −0.08 and +0.17, always with p > 0.3). The measurement does not track known
+significant — and because it is measuring noise, it is not stable run to run (p > 0.3), reflecting that FaceNet on vector art measures noise). The measurement does not track known
 drift, so:
 
 - the identity axis is flagged untrustworthy,
@@ -233,10 +228,26 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for the measurement pipeline in detail.
   diffusion output should be detector-resolved, and that path needs a real key to confirm.
 - **One character, one script, one style.** The demo story is fixed; a wider claim would
   need a panel of characters across several scripts.
+- **Synthetic variety has a known whole-frame confound.** `spread` also changes zoom, light_dir, background_hue, and brightness, not only face geometry; face-excluded variety is the least bad control, but still mixes pose and set.
+- **Reproducibility.** Synthetic results are byte-identical across processes once reference images are hashed by pixel content. The seed derivation previously stringified PIL images (including object addresses) — fixed in this commit.
 - **Hosted providers are unverified.** The adapters are written against the Replicate
   predictions API but have never run, because no `REPLICATE_API_TOKEN` was available
   during development. Treat `pulid` / `instantid` / `baseline` as untested code, not as
   results.
+
+### Environment
+
+- `PANELCRAFT_DATA_DIR` (optional): directory for hosted provider caches, job outputs, and persisted artifacts. Defaults to a per-user temp directory.
+- `REPLICATE_API_TOKEN` (required for `pulid`, `instantid`, and the hosted `baseline`).
+
+## Deployment
+
+The app is intended to run as a Render API + Vercel frontend.
+
+- **Render (API):** see [`render.yaml`](render.yaml). Expects `REPLICATE_API_TOKEN` (for hosted providers) and `PANELCRAFT_DATA_DIR` if you attach a disk. After creation, note the public service URL (e.g. `https://panelcraft-api.onrender.com`). Render's free tier may need enough memory for PyTorch; adjust plan if needed.
+- **Vercel (web):** the build uses `npm run build` in `web/`. [`web/vercel.json`](web/vercel.json) proxies all `/api/*` requests to `https://panelcraft-api.onrender.com/api/:path*`. If your Render service name differs, update that destination.
+- **Caveats:** hosted models (`pulid`, `instantid`, `baseline`) call Replicate's predictions API; the request shapes in [`api/services/providers/hosted.py`](api/services/providers/hosted.py) are best-effort and unverified without a live token.
+
 
 ## License
 

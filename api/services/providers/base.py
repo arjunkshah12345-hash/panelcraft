@@ -46,6 +46,10 @@ class ProviderCapabilities:
     # True when the provider knows the true identity drift, enabling harness validation
     # against ground truth instead of trusting the measurement blindly.
     provides_ground_truth: bool = False
+    # The underlying diffusion backbone, e.g. "FLUX.1-dev" or "SDXL". Recorded because a
+    # prompt-only control is only a *controlled* ablation if it shares this with the
+    # treatment — otherwise the comparison confounds identity with the base model.
+    base_model: str | None = None
     notes: str = ""
 
 

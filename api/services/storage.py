@@ -8,6 +8,7 @@ harder to read.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 from pathlib import Path
 
@@ -16,7 +17,10 @@ from PIL import Image
 from .benchmark import BenchmarkResult, as_pil, plot_tradeoff
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = Path(__file__).resolve().parent / "data"
+# Local development writes inside the repo so a run is inspectable with ``ls``. On a
+# hosted instance the checkout is read-only or ephemeral, so PANELCRAFT_DATA_DIR points at
+# a mounted persistent disk instead; without it, every sweep's images vanish on redeploy.
+DATA = Path(os.getenv("PANELCRAFT_DATA_DIR") or (Path(__file__).resolve().parent / "data"))
 RESULTS = DATA / "results"
 IMAGES = DATA / "images"
 

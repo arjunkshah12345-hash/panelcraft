@@ -160,6 +160,30 @@ def _stable_seed(*parts: object) -> int:
     return int.from_bytes(hashlib.sha256(joined).digest()[:8], "big")
 
 
+def _character_seed(reference: Sequence[object] | None, prompt: str) -> str:
+    """Stable identity for a reference argument, used to seed every random draw.
+
+    A reference can arrive as a seed string or as a rendered image. Strings pass through,
+    but images must be hashed by pixel content: ``str(PIL.Image)`` embeds the object's
+    memory address, so stringifying a reference image produced a different character on
+    every call. That made each sweep render an entirely different cast, which is exactly
+    the kind of uncontrolled variable this harness exists to eliminate.
+    """
+    if not reference:
+        return prompt
+    first = reference[0]
+    if isinstance(first, (tuple, list)):  # provider protocol allows (image, face_box) pairs
+        return _character_seed(list(first[:1]), prompt)
+    if isinstance(first, str):
+        return first
+    if isinstance(first, np.ndarray):
+        return "img:" + hashlib.sha256(np.ascontiguousarray(first).tobytes()).hexdigest()[:32]
+    tobytes = getattr(first, "tobytes", None)
+    if callable(tobytes):
+        return "img:" + hashlib.sha256(tobytes()).hexdigest()[:32]
+    return str(first)
+
+
 def _hsv(hue01: float, sat: float, val: float) -> tuple[int, int, int]:
     hue = int(np.clip(hue01 % 1.0, 0.0, 0.999) * 179)
     return hue, int(np.clip(sat, 0, 1) * 255), int(np.clip(val, 0, 1) * 255)
@@ -576,16 +600,27 @@ class SyntheticProvider:
         return self.character_cache[seed]
 
     def appearance(self, seed: str, index: int, strength: float) -> Appearance:
-        """Per-panel pose.
+        """Per-panel pose and framing.
 
         Pose freedom collapses as identity is pinned. This mirrors the real-world
         failure mode of ID-conditioned diffusion models: at high identity weight the
         face locks and every panel becomes the same mugshot.
+
+        Scope of the strength effect, stated precisely because it bounds what the sweep
+        can conclude. ``spread`` scales five face fields (yaw, pitch, smile, brow_raise,
+        eye_open) and four whole-frame fields (zoom, light_dir, background_hue,
+        brightness). So the *background does move with strength*, by construction. The
+        control that matters is the one below — the RNG draw — not pixel-level invariance
+        of the frame. Consequence for reading results: synthetic identity ground truth is
+        unaffected (identity comes from ``blend``), but synthetic *variety* partly
+        reflects narrowed framing and lighting rather than only facial sameness, so treat
+        the synthetic variety curve as a simulation of the phenomenon, not an independent
+        measurement of it.
         """
         # Seeded WITHOUT strength so every panel draws the same pose sample at every
-        # setting. Only `spread` responds to strength. Seeding on strength as well meant
-        # each condition sampled a different pose, so the sweep measured the seed lottery
-        # rather than the identity dial — it flattened AUROC to chance.
+        # setting — same underlying draws, only their spread scaled. Seeding on strength
+        # as well meant each condition sampled a different pose, so the sweep measured the
+        # seed lottery rather than the identity dial — it flattened AUROC to chance.
         rng = np.random.default_rng(_stable_seed("appearance", seed, index))
         spread = 1.0 - 0.55 * strength
         base_hue = rng.uniform(0, 1)
@@ -642,10 +677,10 @@ class SyntheticProvider:
         satisfies the same protocol as the hosted ones, and the benchmark can call all
         providers through one path.
         """
-        char_seed = reference[0] if reference else prompt
+        char_seed = _character_seed(reference, prompt)
         strength = float(np.clip(identity_strength, 0.0, 1.0))
         identity = self.blend(
-            self.character(str(char_seed)), str(char_seed), panel_index, strength
+            self.character(char_seed), char_seed, panel_index, strength
         )
         appearance = self.appearance(char_seed, panel_index, strength)
         image = self.renderer.render(identity, appearance, caption=caption, with_caption=bool(caption))
@@ -657,7 +692,7 @@ class SyntheticProvider:
             meta={
                 "provider": self.name,
                 "identity_strength": strength,
-                "character_seed": str(char_seed),
+                "character_seed": char_seed,
                 "pose_spread": round(1.0 - 0.55 * strength, 3),
             },
         )

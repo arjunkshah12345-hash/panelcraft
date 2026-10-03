@@ -1,0 +1,46 @@
+# Render blueprint for the PanelCraft API.
+#
+# Deploy with: connect the repo in the Render dashboard -> "Apply this blueprint", or
+# `render blueprint launch`. Everything here is the minimum needed to serve the app;
+# nothing depends on a hosted generation provider.
+#
+# Sizing note: this service loads FaceNet (InceptionResnet_v1 on VGGFace2) plus Torch and
+# MTCNN. That does not fit the free 512MB instance — it OOMs during import, not during a
+# request. `plan: starter` (1GB) is the realistic floor; bump to `standard` if you run
+# hosted providers, whose image downloads add to peak RSS.
+services:
+  - type: web
+    name: panelcraft-api
+    runtime: python
+    plan: starter
+    region: oregon
+    rootDir: .
+    # Weights are fetched at build time, not on first request. Otherwise every cold start
+    # after a deploy pays a ~100MB download before /api/health can answer, and Render may
+    # kill the instance for exceeding the health-check timeout.
+    buildCommand: >-
+      pip install --no-cache-dir -r requirements.txt &&
+      python -c "import facenet_pytorch as f; f.InceptionResnet_v1(pretrained='vggface2').eval(); print('face model warmed')"
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 75
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.5"
+      # The default provider needs no API key, so a fresh deploy is demoable immediately.
+      - key: PANELCRAFT_PROVIDER
+        value: synthetic
+      - key: PANELCRAFT_DATA_DIR
+        value: /var/data
+      # Set in the Render dashboard. Never committed: the hosted PuLID/InstantID/baseline
+      # adapters stay inert without it and the app falls back to the synthetic renderer.
+      - key: REPLICATE_API_TOKEN
+        sync: false
+
+# Results and panel images are flat files on the mounted disk, so sweeps stay browsable
+# across restarts. Without this disk Render's filesystem is ephemeral and /api/results
+# comes back empty after every deploy.
+disks:
+  - name: panelcraft-data
+    mountPath: /var/data
+    sizeGB: 1

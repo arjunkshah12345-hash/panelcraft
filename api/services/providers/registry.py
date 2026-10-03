@@ -12,6 +12,7 @@ call time instead of an import-time crash that would take the whole API down.
 from __future__ import annotations
 
 import os
+from dataclasses import asdict
 
 from .base import GeneratedPanel, Provider, ProviderCapabilities
 from .synthetic import SyntheticProvider
@@ -52,17 +53,14 @@ def describe(name: str):
 
 
 def _cap_dict(caps) -> dict:
-    return {
-        "name": caps.name,
-        "supports_identity_strength": caps.supports_identity_strength,
-        "supports_seed": caps.supports_seed,
-        "identity_param": caps.identity_param,
-        "identity_control": caps.identity_control,
-        "local": caps.local,
-        "provides_face_box": caps.provides_face_box,
-        "measurement_domain": caps.measurement_domain,
-        "notes": caps.notes,
-    }
+    """Serialise the whole dataclass.
+
+    Written out by hand once, this dropped ``provides_ground_truth`` — the UI had no way to
+    tell which providers could be checked against ground truth, because the field was
+    present on the object and absent from the API. Deriving from the dataclass means a new
+    field cannot go missing here again.
+    """
+    return asdict(caps)
 
 
 def get_provider(name: str | None = None) -> Provider:
